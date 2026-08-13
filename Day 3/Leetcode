@@ -1,1 +1,52 @@
+LEETCODE 1-DIVIDE 2 INTEGERS
+class Solution {
+    public int divide(int dividend, int divisor) {
+        if(dividend == Integer.MIN_VALUE && divisor == -1)
+            return Integer.MAX_VALUE;
 
+        return dividend / divisor; 
+    }
+}
+
+LEETCODE 2-COIN CHALLENGE
+import java.util.*;
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if (amount == 0) {
+            return 0;
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        boolean[] visited = new boolean[amount + 1];
+
+        q.add(0);
+        visited[0] = true;
+
+        int count = 0;
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            count++;
+
+            for (int i = 0; i < size; i++) {
+                int current = q.poll();
+
+                for (int coin : coins) {
+                    int next = current + coin;
+
+                    if (next == amount) {
+                        return count;
+                    }
+
+                    if (next < amount && !visited[next]) {
+                        visited[next] = true;
+                        q.add(next);
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+}
